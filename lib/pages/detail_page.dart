@@ -18,7 +18,26 @@ class DetailNewsUI extends StatelessWidget {
         child: Consumer<NewsProvider>(
           builder: (_, cp, __) {
             return Column(
-              children: [Image.network(cp.selectedNews?.urlToImage ?? '-')],
+              children: [
+                Image.network(
+                  cp.selectedNews?.urlToImage ?? '-',
+                  height: 250,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: MediaQuery.sizeOf(context).width,
+                  child: Text(cp.selectedNews?.description ?? '-'),
+                ),
+                SizedBox(
+                  child: Image.asset(
+                    './assets/News.png',
+                    height: 330,
+                    width: 350,
+                  ),
+                ),
+              ],
             );
           },
         ),
