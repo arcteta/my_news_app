@@ -162,30 +162,32 @@ class ListBeritaUI extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (_, index) {
                               return ListTile(
+                                
                                 title: Text(
-                                  'Title Berita $index',
+                                  snapshot.data?[index].title ?? '-',
                                   style: const TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black87,
                                   ),
                                 ),
                                 subtitle: Text(
-                                  'Description Berita $index',
+                                  snapshot.data?[index].description ?? '-',
                                   style: const TextStyle(
-                                    fontSize: 12,
+                                    overflow: TextOverflow.ellipsis,
+                                    fontSize: 8,
                                     color: Colors.grey,
                                   ),
                                 ),
                                 leading: Container(
-                                  width: 60,
-                                  height: 100,
+                                  width: 50,
+                                  height: 50,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
-                                    image: const DecorationImage(
+                                    image: DecorationImage(
                                       fit: BoxFit.fill,
                                       image: NetworkImage(
-                                        'https://picsum.photos/200/300',
+                                        snapshot.data?[index].urlToImage ?? '-',
                                       ),
                                     ),
                                   ),
