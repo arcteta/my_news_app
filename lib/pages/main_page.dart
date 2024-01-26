@@ -54,76 +54,82 @@ class ListBeritaUI extends StatelessWidget {
                 height: 20,
               ),
               // Latest News Widget
-              Column(
-                children: [
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              FutureBuilder(
+                future: Api().readNewsData(),
+                builder: (context,snapshot) {
+                  return Column(
                     children: [
-                      Text(
-                        'Latest News',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Latest News',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 220,
-                    child: ListView.separated(
-                      separatorBuilder: (_, __) => const SizedBox(
-                        width: 12,
-                      ),
-                      itemCount: 9,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (_, index) {
-                        return GestureDetector(
-                          onTap: () {},
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                width: 250,
-                                height: 150,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  image: const DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: NetworkImage(
-                                      'https://picsum.photos/200/300',
+                      SizedBox(
+                        height: 220,
+                        child: ListView.separated(
+                          separatorBuilder: (_, __) => const SizedBox(
+                            width: 12,
+                          ),
+                          itemCount: 9,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (_, index) {
+                            return GestureDetector(
+                              onTap: () {},
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    width: 250,
+                                    height: 150,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(
+                                          snapshot.data?[index].urlToImage?? '-',
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    snapshot.data?[index].title??'_',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87,
+                                      overflow: TextOverflow.fade
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    snapshot.data?[index].description??'0',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                'Title Berita $index',
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                'Description Berita $index',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                ],
+                            );
+                          },
+                        ),
+                      )
+                    ],
+                  );
+                }
               ),
               const SizedBox(
                 height: 20,
@@ -162,7 +168,7 @@ class ListBeritaUI extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (_, index) {
                               return ListTile(
-                                
+
                                 title: Text(
                                   snapshot.data?[index].title ?? '-',
                                   style: const TextStyle(
