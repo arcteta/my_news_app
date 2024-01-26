@@ -53,87 +53,96 @@ class ListBeritaUI extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+
               // Latest News Widget
               FutureBuilder(
-                future: Api().readNewsData(),
-                builder: (context,snapshot) {
-                  return Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Latest News',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                  future: Api().readNewsData(),
+                  builder: (context, snapshot) {
+                    return Column(
+                      children: [
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Latest News',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 220,
-                        child: ListView.separated(
-                          separatorBuilder: (_, __) => const SizedBox(
-                            width: 12,
-                          ),
-                          itemCount: 9,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (_, index) {
-                            return GestureDetector(
-                              onTap: () {},
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    width: 250,
-                                    height: 150,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                          snapshot.data?[index].urlToImage?? '-',
+                          ],
+                        ),
+                        SizedBox(
+                          height: 220,
+                          child: ListView.separated(
+                            separatorBuilder: (_, __) => const SizedBox(
+                              width: 12,
+                            ),
+                            itemCount: snapshot.data?.length ?? 0,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (_, index) {
+                              return GestureDetector(
+                                onTap: () {},
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: 250,
+                                      height: 150,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: NetworkImage(
+                                            snapshot.data?[index].urlToImage ??
+                                                '-',
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    snapshot.data?[index].title??'_',
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black87,
-                                      overflow: TextOverflow.fade
+                                    const SizedBox(
+                                      height: 5,
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    snapshot.data?[index].description??'0',
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
+                                    Container(
+                                      width: 200,
+                                      child: Text(
+                                        snapshot.data?[index].title ?? '_',
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black87,
+                                            overflow: TextOverflow.ellipsis),
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      )
-                    ],
-                  );
-                }
-              ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                      width: 200,
+                                      child: Text(
+                                        snapshot.data?[index].description ??
+                                            '0',
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    );
+                  }),
               const SizedBox(
                 height: 20,
               ),
+
               // Hot News Widget
               Column(
                 children: [
@@ -168,7 +177,6 @@ class ListBeritaUI extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (_, index) {
                               return ListTile(
-
                                 title: Text(
                                   snapshot.data?[index].title ?? '-',
                                   style: const TextStyle(
