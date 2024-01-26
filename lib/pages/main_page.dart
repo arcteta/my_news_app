@@ -13,23 +13,6 @@ class ListBeritaUI extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              FutureBuilder(
-                future: Api().readNewsData(),
-                builder: (context, snapshot) {
-                  print(snapshot);
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    // return ListView.builder(
-                    //     itemCount: snapshot.data?.length,
-                    //     itemBuilder: (context, index) {
-                    //       return ListTile(
-                    //         leading: Image.network(
-                    //             snapshot.data?[index].urlToImage! ?? '-'),
-                    //       );
-                    //     });
-                  }
-                  return CircularProgressIndicator();
-                },
-              ),
               const SizedBox(
                 height: 25,
               ),
@@ -168,46 +151,59 @@ class ListBeritaUI extends StatelessWidget {
                       ),
                     ],
                   ),
-                  ListView.builder(
-                    primary: true,
-                    shrinkWrap: true,
-                    itemCount: 5,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (_, index) {
-                      return (
-                        child: ListTile(
-                          title: Text(
-                            'Title Berita $index',
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
-                          ),
-                          subtitle: Text(
-                            'Description Berita $index',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          leading: Container(
-                            width: 60,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              image: const DecorationImage(
-                                fit: BoxFit.fill,
-                                image: NetworkImage(
-                                  'https://picsum.photos/200/300',
+                  FutureBuilder(
+                      future: Api().readNewsData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return ListView.builder(
+                            primary: true,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data?.length,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              return ListTile(
+                                title: Text(
+                                  'Title Berita $index',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  )
+                                subtitle: Text(
+                                  'Description Berita $index',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                leading: Container(
+                                  width: 60,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    image: const DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: NetworkImage(
+                                        'https://picsum.photos/200/300',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                          // return ListView.builder(
+                          //     itemCount: snapshot.data?.length,
+                          //     itemBuilder: (context, index) {
+                          //       return ListTile(
+                          //         leading: Image.network(
+                          //             snapshot.data?[index].urlToImage! ?? '-'),
+                          //       );
+                          //     });
+                        }
+                        return CircularProgressIndicator();
+                      })
                 ],
               )
             ],
