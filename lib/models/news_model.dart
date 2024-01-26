@@ -1,4 +1,4 @@
-class News {
+class NewsModels {
   String? author;
   String? title;
   String? description;
@@ -6,7 +6,7 @@ class News {
   String? publishedAt;
   String? content;
 
-  News(
+  NewsModels(
       {this.author,
       this.title,
       this.description,
@@ -14,7 +14,7 @@ class News {
       this.publishedAt,
       this.content});
 
-  News.fromJson(Map<String, dynamic> json) {
+  NewsModels.fromJson(Map<String, dynamic> json) {
     author = json['author'];
     title = json['title'];
     description = json['description'];

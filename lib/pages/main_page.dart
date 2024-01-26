@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_news_app/controller/news_provider.dart';
+import 'package:my_news_app/pages/detail_page.dart';
+import 'package:provider/provider.dart';
 // import 'package:my_news_app/service/api.dart';
 import '../service/api.dart';
 
@@ -7,6 +10,7 @@ class ListBeritaUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final newsProvider = Provider.of<NewsProvider>(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -82,7 +86,17 @@ class ListBeritaUI extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (_, index) {
                               return GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  newsProvider
+                                      .selectNews(snapshot.data![index]);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const DetailNewsUI(),
+                                    ),
+                                  );
+                                },
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
@@ -142,7 +156,6 @@ class ListBeritaUI extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-
               // Hot News Widget
               Column(
                 children: [

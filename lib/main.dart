@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_news_app/controller/news_provider.dart';
 import 'package:my_news_app/pages/detail_page.dart';
 import 'package:my_news_app/pages/main_page.dart';
+import 'package:provider/provider.dart';
 // import 'package:my_news_app/pages/main_page.dart';
 
 void main() {
@@ -12,13 +14,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => NewsProvider(),
+        )
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const ListBeritaUI(),
       ),
-      home: const ListBeritaUI(),
     );
   }
 }
