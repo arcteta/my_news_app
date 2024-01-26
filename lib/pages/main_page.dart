@@ -189,32 +189,45 @@ class ListBeritaUI extends StatelessWidget {
                             itemCount: snapshot.data?.length,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (_, index) {
-                              return ListTile(
-                                title: Text(
-                                  snapshot.data?[index].title ?? '-',
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
+                              return GestureDetector(
+                                onTap: () {
+                                  newsProvider
+                                      .selectNews(snapshot.data![index]);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const DetailNewsUI(),
+                                    ),
+                                  );
+                                },
+                                child: ListTile(
+                                  title: Text(
+                                    snapshot.data?[index].title ?? '-',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87,
+                                    ),
                                   ),
-                                ),
-                                subtitle: Text(
-                                  snapshot.data?[index].description ?? '-',
-                                  style: const TextStyle(
-                                    overflow: TextOverflow.ellipsis,
-                                    fontSize: 8,
-                                    color: Colors.grey,
+                                  subtitle: Text(
+                                    snapshot.data?[index].description ?? '-',
+                                    style: const TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: 8,
+                                      color: Colors.grey,
+                                    ),
                                   ),
-                                ),
-                                leading: Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: NetworkImage(
-                                        snapshot.data?[index].urlToImage ?? '-',
+                                  leading: Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(
+                                          snapshot.data?[index].urlToImage ?? '-',
+                                        ),
                                       ),
                                     ),
                                   ),
